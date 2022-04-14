@@ -159,13 +159,15 @@ def _handle_PacketIn ( event):
                     msg.match.tp_src = 80
                     msg.match.tp_dst = 80
                     msg.hard_timeout = TIME_OUT
-                    msg.actions.append(of.ofp_action_output(port = event.port))
+                    # msg.actions.append(of.ofp_action_output(port = event.port))
+                    msg.actions.append(of.ofp_action_enqueue(port = dst_port, queue_id = 0))
                     event.connection.send(msg)
 
                     msg = of.ofp_packet_out()
                     msg.priority=100
                     msg.data = event.ofp
-                    msg.actions.append(of.ofp_action_output(port = dst_port))
+                    # msg.actions.append(of.ofp_action_output(port = dst_port))
+                    msg.actions.append(of.ofp_action_enqueue(port = dst_port, queue_id = 0))
                     event.connection.send(msg)
             elif (src == 80 and packet.src == rules[1] and packet.dst == rules[2]):
 
@@ -183,13 +185,15 @@ def _handle_PacketIn ( event):
                     msg.match.tp_src = 80
                     msg.match.tp_dst = 80
                     msg.hard_timeout = TIME_OUT
-                    msg.actions.append(of.ofp_action_output(port = event.port))
+                    # msg.actions.append(of.ofp_action_output(port = event.port))
+                    msg.actions.append(of.ofp_action_enqueue(port = dst_port, queue_id = 1))
                     event.connection.send(msg)
 
                     msg = of.ofp_packet_out()
                     msg.priority=100
                     msg.data = event.ofp
-                    msg.actions.append(of.ofp_action_output(port = dst_port))
+                    # msg.actions.append(of.ofp_action_output(port = dst_port))
+                    msg.actions.append(of.ofp_action_enqueue(port = dst_port, queue_id = 1))
                     event.connection.send(msg)
 
             # H2 <-> H4
@@ -315,12 +319,14 @@ def _handle_PacketIn ( event):
                     msg.match.tp_dst = 80
                     msg.hard_timeout = TIME_OUT
                     msg.actions.append(of.ofp_action_output(port = event.port))
+                    # msg.actions.append(of.ofp_action_enqueue(port = dst_port, queue_id = 0))
                     event.connection.send(msg)
 
                     msg = of.ofp_packet_out()
                     msg.priority=100
                     msg.data = event.ofp
                     msg.actions.append(of.ofp_action_output(port = dst_port))
+                    # msg.actions.append(of.ofp_action_enqueue(port = dst_port, queue_id = 0))
                     event.connection.send(msg)
             elif (src == 80 and packet.src == rules[1] and packet.dst == rules[2]):
 
@@ -339,12 +345,14 @@ def _handle_PacketIn ( event):
                     msg.match.tp_dst = 80
                     msg.hard_timeout = TIME_OUT
                     msg.actions.append(of.ofp_action_output(port = event.port))
+                    # msg.actions.append(of.ofp_action_enqueue(port = dst_port, queue_id = 1))
                     event.connection.send(msg)
 
                     msg = of.ofp_packet_out()
                     msg.priority=100
                     msg.data = event.ofp
                     msg.actions.append(of.ofp_action_output(port = dst_port))
+                    # msg.actions.append(of.ofp_action_enqueue(port = dst_port, queue_id = 1))
                     event.connection.send(msg)
 
             # H2 <-> H4
